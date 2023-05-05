@@ -12,6 +12,7 @@ public class Hub {
     private Contenedor[][] contenedores;    // debe inicializarse con 10 filas y 12 columnas.
     private static int numContenedor = 1;           // utilizado para asignar un identificador (único en el
                                                     // puerto) a cada contenedor antes de apilarlos.
+    private static int contContenedor = 1;
 
 
     /**
@@ -82,6 +83,7 @@ public class Hub {
         if (cont != null) {
             cont.setIdentificador(Hub.numContenedor);
             Hub.numContenedor++;
+            Hub.contContenedor++;
 
             switch (cont.getPrioridad()) {
                 case 1:
@@ -124,6 +126,7 @@ public class Hub {
     public boolean desapilarContenedor(int columna) {
         boolean desapilado = false;
 
+
         if (columna >= 0 && columna < this.contenedores[0].length) {
             for (int i = 0; i < this.contenedores.length && !desapilado; i++) {
                 if (this.contenedores[i][columna] != null) {
@@ -133,6 +136,7 @@ public class Hub {
             }
         }
 
+        Hub.contContenedor--;
         return desapilado;
     }
 
@@ -180,3 +184,4 @@ public class Hub {
         return s.toString();
     }
 }
+

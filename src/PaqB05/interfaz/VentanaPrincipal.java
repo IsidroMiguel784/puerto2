@@ -3,6 +3,7 @@ package PaqB05.interfaz;
 import PaqB05.Contenedor;
 import PaqB05.Hub;
 import PaqB05.Puerto;
+import PaqB05.VentanaDatos;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -34,10 +35,14 @@ public class VentanaPrincipal extends JFrame {
     private JRadioButton SeleccionarHubButton2;
     private JRadioButton SeleccionarHubButton1;
     private JRadioButton SeleccionarHubButton3;
+    private JButton contenedorHubButton;
     private Puerto puerto;
     private String[] paises = {"Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda", "Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán","Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután","Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Etiopía","Filipinas","Finlandia","Fiyi","Francia","Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea ecuatorial","Guinea-Bisáu","Haití","Honduras","Hungría","India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Islas Salomón","Israel","Italia","Jamaica","Japón","Jordania","Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait","Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo","Madagascar","Malasia","Malaui","Maldivas","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique","Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda","Omán","Países Bajos","Pakistán","Palaos","Palestina","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal","Reino Unido","República Centroafricana","República Checa","República de Macedonia","República del Congo","República Democrática del Congo","República Dominicana","República Sudafricana","Ruanda","Rumanía","Rusia","Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia","Sudán","Sudán del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistán","Vanuatu","Venezuela","Vietnam","Yemen","Yibuti","Zambia","Zimbabue"};
     private int numHub;                         // Hub de contenedores actual
     private VentanaInfContenedor info;          // Ventana de información, para el cambio de paneles
+
+    private VentanaDatos info2;
+
     private VentanaPrincipal estaVentana;       // Puntero al objeto de esta propia ventana, para el cambio de paneles
 
     public VentanaPrincipal(Puerto puerto) {
@@ -191,6 +196,24 @@ public class VentanaPrincipal extends JFrame {
                 SeleccionarHubButton1.setSelected(false);
                 numHub = 3;
                 actualizarEstado();
+            }
+        });
+        contenedorHubButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Contenedor contenedor =
+                        puerto.buscarContenedor(Integer.parseInt(idContenedorTextField.getText()),
+                                numHub);
+
+                if (contenedor != null) {
+                    info2 = new VentanaDatos(estaVentana);
+                    setContentPane(info2.JPanelPrincipal);
+                    repaint();
+                } else {
+                    erroresJField.setText("[ERROR] No se ha encontrado el contenedor en el hub. Prueba a " +
+                            "seleccionar otro hub para buscar en él.");
+                }
+
             }
         });
     }
